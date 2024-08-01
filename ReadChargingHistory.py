@@ -14,8 +14,8 @@ if len(sys.argv) != 3:
     print("Invalid arguments supplied.")
 else:
 
-    fromDate = datetime.strptime(sys.argv[1], "%m/%d/%Y")    
-    toDate = datetime.strptime(sys.argv[2], "%m/%d/%Y")    
+    fromDate = datetime.strptime(sys.argv[1], "%m/%d/%Y")
+    toDate = datetime.strptime(sys.argv[2], "%m/%d/%Y")
 
     print()
     print("Calculating charges from {0}/{1}/{2} to {3}/{4}/{5}".format(fromDate.month, fromDate.day, fromDate.year, toDate.month, toDate.day, toDate.year))
@@ -32,22 +32,22 @@ else:
     chargeList = []
 
     for file in fileNames:
-    
+
         df = read_excel(file, "BMW Charging")
-    
+
         pricePattern = "[0-9]+.[0-9]+"
         for index, row in df.iterrows():
-            if "USD" in str(row[7]):
+            if "USD" in str(row[8]):
                 chargeDate = datetime.strptime(row[0], "%m/%d/%Y %H:%M %p")
                 amount = 0
-                amounts = re.findall(pricePattern, row[7]) 
+                amounts = re.findall(pricePattern, row[8])
                 if len(amounts) > 0:
                     amount = float(amounts[0])
                     chargeList.append(Charge(chargeDate, amount))
-    
+
     # Sort based on Dates
     chargeList.sort(key = lambda x: x.chargeDate)
-    
+
     print("Charge Date \t Price(USD)")
     print("----------------------------")
     total = 0.0
@@ -58,15 +58,3 @@ else:
 
     print("----------------------------")
     print("Total: \t\t ${:.2f}".format(total))
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
