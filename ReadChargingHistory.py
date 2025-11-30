@@ -37,10 +37,10 @@ else:
 
         pricePattern = "[0-9]+.[0-9]+"
         for index, row in df.iterrows():
-            if "USD" in str(row[8]):
-                chargeDate = datetime.strptime(row[0], "%m/%d/%Y %H:%M %p")
+            if "USD" in str(row.iloc[8]):
+                chargeDate = datetime.strptime(row.iloc[0], "%m/%d/%Y %H:%M %p")
                 amount = 0
-                amounts = re.findall(pricePattern, row[8])
+                amounts = re.findall(pricePattern, row.iloc[8])
                 if len(amounts) > 0:
                     amount = float(amounts[0])
                     chargeList.append(Charge(chargeDate, amount))
